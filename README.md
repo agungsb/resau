@@ -1,6 +1,6 @@
 # Introduction
 
-React 16.3's new Context API is very promising. Who knows that in the future we're no longer need the likes of Redux for our app's state management?
+React 16.3's new [Context API](https://reactjs.org/docs/context.html) is very promising. Who knows that in the future we're no longer need the likes of Redux for our app's state management? For more information, [this article](https://medium.freecodecamp.org/replacing-redux-with-the-new-react-context-api-8f5d01a00e8c) is worth to read.
 
 # Getting Started
 
