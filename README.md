@@ -78,7 +78,7 @@ class App extends React.PureComponent {
   }
 }
 
-export default App;
+export default withRouter(App);
 
 ```
 
