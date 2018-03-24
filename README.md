@@ -97,7 +97,7 @@ class Home extends React.Component {
     console.log("nextProps", nextProps);
   };
   state = {
-    firstName: this.props.firstName,
+    firstName: this.props.firstName || "",
     lastName: this.props.lastName || ""
   };
   handleChangeFirst = event => {
