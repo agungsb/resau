@@ -1,10 +1,10 @@
-## Introduction
+# Introduction
 
 React 16.3's new Context API is very promising. Who knows that in the future we're no longer need the likes of Redux for our app's state management?
 
-## Getting Started
+# Getting Started
 
-# Prerequisites
+## Prerequisites
 
 This plugin uses React 16.3's new Context API. So this plugin won't be working with version below React 16.3. Make sure to use the latest version of React by running the following command:
 
@@ -14,9 +14,9 @@ Install package
 
 `npm install resau` or `yarn add resau`
 
-## Usage
+# Usage
 
-# Create Store
+## Create Store
 
 Create a component for your app's store using `Provider`.
 
@@ -52,7 +52,7 @@ export default StoreProvider;
 
 ```
 
-# Attach Store to App
+## Attach Store to App
 
 Now that you have created the app's store, it's time to attach the store to the app.
 
@@ -82,7 +82,7 @@ export default App;
 
 ```
 
-# Connect To Component
+## Connect To Component
 
 You're good to go. All you have to do is connecting your component to the store you've created earlier using `connect`.
 
@@ -158,14 +158,10 @@ The `mapStateToProps` variable is a function that return the context's state you
 
 In general, if you are familiar with Redux, it's going to be easy to understand.. (plus, there is no `mapDispatchToProps`!)
 
-## Publish library
-
-`npm publish`
-
-## Powered by
+# Powered by
 
 https://github.com/DimitriMikadze/create-react-library
 
-## License
+# License
 
 MIT
