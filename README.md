@@ -115,7 +115,6 @@ class Home extends React.Component {
     this.props.setLastName(this.state.lastName);
   };
   render() {
-    console.log("berubah");
     return (
       <React.Fragment>
         <div>{this.props.firstName}</div>
