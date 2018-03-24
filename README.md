@@ -162,6 +162,10 @@ In general, if you are familiar with Redux, it's going to be easy to understand.
 
 https://github.com/DimitriMikadze/create-react-library
 
+# Example
+
+Just clone this repo and run `yarn start`. The example is in `/src/demo/`.
+
 # License
 
 MIT
