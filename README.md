@@ -1,64 +1,171 @@
-# React NPM library starter kit
+## Introduction
 
-[![Build Status](https://travis-ci.org/DimitriMikadze/create-react-library.svg?branch=master)](https://travis-ci.org/DimitriMikadze/create-react-library)
-[![Dependencies](https://img.shields.io/david/DimitriMikadze/create-react-library.svg)]()
-[![Dev Dependencies](https://img.shields.io/david/dev/DimitriMikadze/create-react-library.svg)]()
-
-based on Facebook's <a href="https://github.com/facebookincubator/create-react-app" target="_blank">Create react app</a>.
-We are constantly updating repository with the updates of `create-react-app`, so we have all new features and bug fixes of it.
-
-## Converted to custom setup
-
-Moved all dependencies to dev dependencies because we don't need extra dependencies for our library after build, but we want all this features while developing: 
-
-* React, JSX, ES6, and Flow syntax support.
-* Language extras beyond ES6 like the object spread operator.
-* A dev server that lints for common errors.
-* Import CSS and image files directly from JavaScript.
-* Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
-* A `build` script to bundle JS, CSS, and images for production.
+React 16.3's new Context API is very promising. Who knows that in the future we're no longer need the likes of Redux for our app's state management?
 
 ## Getting Started
 
-Clone repo
+# Prerequisites
 
-````
-git clone https://github.com/DimitriMikadze/create-react-library.git
-````
+This plugin uses React 16.3's new Context API. So this plugin won't be working with version below React 16.3. Make sure to use the latest version of React by running the following command:
 
-Install dependencies
+`npm install react@next react-dom@next` or `yarn add react@next react-dom@next`
 
-`npm install` or `yarn install`
+Install package
 
-Start development server
+`npm install resau` or `yarn add resau`
 
-`npm start` or `yarn start`
+## Usage
 
-Runs the demo app in development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Create Store
 
-## Library files
+Create a component for your app's store using `Provider`.
 
-All library files are located inside `src/lib`  
+e.g. `/src/components/Store.js`
 
-## Demo app
+```
+import React from "react";
+import { Provider } from "resau";
 
-Is located inside `src/demo` directory, here you can test your library while developing
+class StoreProvider extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      arr: [1, 2, 3, 4, 5, 6],
+      firstName: "Didier",
+      lastName: "Franc",
+      setFirstName: this.setFirstName,
+      setLastName: this.setLastName
+    };
+  }
+  setFirstName = firstName => {
+    this.setState({ firstName });
+  };
+  setLastName = lastName => {
+    this.setState({ lastName });
+  };
+  render() {
+    return <Provider value={this.state}>{this.props.children}</Provider>;
+  }
+}
 
-## Testing
+export default StoreProvider;
 
-`npm run test` or `yarn run test`
+```
 
-## Build library
+# Attach Store to App
 
-`npm run build` or `yarn run build`
+Now that you have created the app's store, it's time to attach the store to the app.
 
-Produces production version of library under the `build` folder.
+e.g. `/src/containers/App/index.js`
+
+```
+import React from "react";
+import { Route, Switch, withRouter } from "react-router-dom";
+
+import Home from "./../Home";
+
+import StoreProvider from "./../../components/Context/Store";
+
+class App extends React.PureComponent {
+  render() {
+    return (
+      <StoreProvider>
+        <Switch location={this.props.location}>
+          <Route exact path="/" render={props => <Home {...props} />} />
+        </Switch>
+      </StoreProvider>
+    );
+  }
+}
+
+export default App;
+
+```
+
+# Connect To Component
+
+You're good to go. All you have to do is connecting your component to the store you've created earlier using `connect`.
+
+e.g. `/src/containers/Home/index.js`
+
+```
+import React from "react";
+import { connect } from "resau";
+
+class Home extends React.Component {
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    console.log("nextProps", nextProps);
+  };
+  state = {
+    firstName: this.props.firstName,
+    lastName: this.props.lastName || ""
+  };
+  handleChangeFirst = event => {
+    this.setState({ firstName: event.target.value });
+  };
+  handleSubmitFirst = event => {
+    event.preventDefault();
+    this.props.setFirstName(this.state.firstName);
+  };
+  handleChangeLast = event => {
+    this.setState({ lastName: event.target.value });
+  };
+  handleSubmitLast = event => {
+    event.preventDefault();
+    this.props.setLastName(this.state.lastName);
+  };
+  render() {
+    console.log("berubah");
+    return (
+      <React.Fragment>
+        <div>{this.props.firstName}</div>
+        <div>
+          <div>
+            <input
+              type="text"
+              onChange={this.handleChangeFirst}
+              defaultValue={this.state.firstName}
+            />
+          </div>
+          <button onClick={this.handleSubmitFirst}>Change first name</button>
+        </div>
+        <div>
+          <div>
+            <input
+              type="text"
+              onChange={this.handleChangeLast}
+              value={this.state.lastName}
+            />
+          </div>
+          <button onClick={this.handleSubmitLast}>Change last name</button>
+        </div>
+      </React.Fragment>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  firstName: state.firstName,
+  lastName: state.lastName,
+  setFirstName: state.setFirstName,
+  setLastName: state.setLastName
+});
+
+export default connect(mapStateToProps)(Home);
+```
+
+The `mapStateToProps` variable is a function that return the context's state you want to map as the component's props. The states can be any type, it depends on what you define on your app's store. In the above example, there's one state that we don't subscribe to, which is `arr`.
+
+In general, if you are familiar with Redux, it's going to be easy to understand.. (plus, there is no `mapDispatchToProps`!)
 
 ## Publish library
 
 `npm publish`
 
-## Example library built with this starter kit
+## Powered by
 
-https://github.com/DimitriMikadze/react-under-construction
+https://github.com/DimitriMikadze/create-react-library
+
+## License
+
+MIT
