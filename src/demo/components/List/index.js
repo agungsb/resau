@@ -6,7 +6,6 @@ import { connect } from "./../../../lib";
 
 class List extends Component {
   render() {
-    console.log("this.props", this.props);
     let arr = this.props.arr;
     let listItems = arr.map((item, index) => {
       return (
@@ -15,7 +14,7 @@ class List extends Component {
           onClick={this.goToItem.bind(this)}
           style={{ padding: 10, backgroundColor: randomColor() }}
         >
-          This is a paragraph - {item}
+          This is a paragraph No - {item}
         </div>
       );
     });
