@@ -157,7 +157,7 @@ The `mapStateToProps` variable is a function that return the context's state you
 
 In general, if you are familiar with Redux, it's going to be easy to understand.. (plus, there is no `mapDispatchToProps`!)
 
-If you are using `react-router-dom` and you find yourself can't navigate between routes, you might need to wrap your component `react-router-dom`'s `withRouter` higher order component.
+If you are using `react-router-dom` and you find yourself can't navigate between routes, you might need to wrap your component with `react-router-dom`'s `withRouter` higher order component.
 
 # Powered by
 
