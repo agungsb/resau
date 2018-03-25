@@ -18,7 +18,7 @@ Install package
 
 ## Create Store
 
-Create a component for your app's store using `Provider`.
+Instead of `actions` and `reducers` like Redux, the store is just the state of a React component.
 
 e.g. `/src/components/Store.js`
 
@@ -54,31 +54,29 @@ export default StoreProvider;
 
 ## Attach Store to App
 
-Now that you have created the app's store, it's time to attach the store to the app.
+Now that you have created the app's store, it's time to put the store to app's root component.
 
-e.g. `/src/containers/App/index.js`
+e.g. `/src/index.js`
 
 ```
 import React from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./containers/App";
+import { Router } from "react-router-dom";
 
-import Home from "./../Home";
+import createHistory from "history/createBrowserHistory";
+import StoreProvider from "./components/Context/Store";
 
-import StoreProvider from "./../../components/Context/Store";
-
-class App extends React.PureComponent {
-  render() {
-    return (
-      <StoreProvider>
-        <Switch location={this.props.location}>
-          <Route exact path="/" render={props => <Home {...props} />} />
-        </Switch>
-      </StoreProvider>
-    );
-  }
-}
-
-export default withRouter(App);
+const history = createHistory();
+ReactDOM.render(
+  <StoreProvider>
+    <Router history={history}>
+      <App />
+    </Router>
+  </StoreProvider>,
+  document.getElementById("root")
+);
 
 ```
 
@@ -153,9 +151,13 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(Home);
 ```
 
+# Notes
+
 The `mapStateToProps` variable is a function that return the context's state you want to map as the component's props. The states can be any type, it depends on what you define on your app's store. In the above example, there's one state that we don't subscribe to, which is `arr`.
 
 In general, if you are familiar with Redux, it's going to be easy to understand.. (plus, there is no `mapDispatchToProps`!)
+
+If you are using `react-router-dom` and you find yourself can't navigate between routes, you might need to wrap your component `react-router-dom`'s `withRouter` higher order component.
 
 # Powered by
 
