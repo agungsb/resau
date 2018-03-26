@@ -1,6 +1,6 @@
 # Introduction
 
-React 16.3's new Context API is very promising. Who knows that in the future we're no longer need the likes of Redux for our app's state management?
+React 16.3's new [Context API](https://reactjs.org/docs/context.html) is very promising. Who knows that in the future we're no longer need the likes of Redux for our app's state management? For more information, [this article](https://medium.freecodecamp.org/replacing-redux-with-the-new-react-context-api-8f5d01a00e8c) is worth to read.
 
 # Getting Started
 
@@ -18,7 +18,7 @@ Install package
 
 ## Create Store
 
-Create a component for your app's store using `Provider`.
+Instead of `actions` and `reducers` like Redux, the store is just the state of a React component.
 
 e.g. `/src/components/Store.js`
 
@@ -54,31 +54,29 @@ export default StoreProvider;
 
 ## Attach Store to App
 
-Now that you have created the app's store, it's time to attach the store to the app.
+Now that you have created the app's store, it's time to put the store to app's root component.
 
-e.g. `/src/containers/App/index.js`
+e.g. `/src/index.js`
 
 ```
 import React from "react";
-import { Route, Switch, withRouter } from "react-router-dom";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./containers/App";
+import { Router } from "react-router-dom";
 
-import Home from "./../Home";
+import createHistory from "history/createBrowserHistory";
+import StoreProvider from "./components/Context/Store";
 
-import StoreProvider from "./../../components/Context/Store";
-
-class App extends React.PureComponent {
-  render() {
-    return (
-      <StoreProvider>
-        <Switch location={this.props.location}>
-          <Route exact path="/" render={props => <Home {...props} />} />
-        </Switch>
-      </StoreProvider>
-    );
-  }
-}
-
-export default withRouter(App);
+const history = createHistory();
+ReactDOM.render(
+  <StoreProvider>
+    <Router history={history}>
+      <App />
+    </Router>
+  </StoreProvider>,
+  document.getElementById("root")
+);
 
 ```
 
@@ -97,7 +95,7 @@ class Home extends React.Component {
     console.log("nextProps", nextProps);
   };
   state = {
-    firstName: this.props.firstName,
+    firstName: this.props.firstName || "",
     lastName: this.props.lastName || ""
   };
   handleChangeFirst = event => {
@@ -115,7 +113,6 @@ class Home extends React.Component {
     this.props.setLastName(this.state.lastName);
   };
   render() {
-    console.log("berubah");
     return (
       <React.Fragment>
         <div>{this.props.firstName}</div>
@@ -154,9 +151,13 @@ const mapStateToProps = state => ({
 export default connect(mapStateToProps)(Home);
 ```
 
+# Notes
+
 The `mapStateToProps` variable is a function that return the context's state you want to map as the component's props. The states can be any type, it depends on what you define on your app's store. In the above example, there's one state that we don't subscribe to, which is `arr`.
 
 In general, if you are familiar with Redux, it's going to be easy to understand.. (plus, there is no `mapDispatchToProps`!)
+
+If you are using `react-router-dom` and you find yourself can't navigate between routes, you might need to wrap your component with `react-router-dom`'s `withRouter` higher order component.
 
 # Powered by
 
