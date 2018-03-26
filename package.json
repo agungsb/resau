@@ -10,13 +10,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DimitriMikadze/create-react-library.git"
+    "url": "git+https://github.com/agungsb/resau.git"
   },
-  "author": "Dimitri Mikadze <dimitrimikadze@gmail.com>",
+  "author": "Agung Surya Bangsa <agung.surya@live.com>",
   "bugs": {
-    "url": "https://github.com/DimitriMikadze/create-react-library/issues"
+    "url": "https://github.com/agungsb/resau/issues"
   },
-  "homepage": "https://github.com/DimitriMikadze/create-react-library#readme",
+  "homepage": "https://github.com/agungsb/resau#readme",
   "license": "MIT",
   "dependencies": {
     "randomcolor": "^0.5.3",

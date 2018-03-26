@@ -5,11 +5,14 @@ import App from "./containers/App";
 import { Router } from "react-router-dom";
 
 import createHistory from "history/createBrowserHistory";
+import StoreProvider from "./components/Context/Store";
 
 const history = createHistory();
 ReactDOM.render(
-  <Router history={history}>
-    <App />
-  </Router>,
+  <StoreProvider>
+    <Router history={history}>
+      <App />
+    </Router>
+  </StoreProvider>,
   document.getElementById("root")
 );
