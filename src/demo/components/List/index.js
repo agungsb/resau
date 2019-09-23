@@ -6,8 +6,7 @@ import { connect } from "./../../../lib";
 
 class List extends Component {
   render() {
-    let arr = this.props.arr;
-    let listItems = arr.map((item, index) => {
+    let listItems = this.props.paragraph.map((item, index) => {
       return (
         <div
           key={index}
@@ -20,7 +19,7 @@ class List extends Component {
     });
     return (
       <div className="transition-item list-page">
-        <h2>{this.props.firstName}</h2>
+        <h2>{this.props.firstName} - {this.props.lastName}</h2>
         <div>{listItems}</div>
       </div>
     );
@@ -37,8 +36,9 @@ class List extends Component {
 // const subscribedContextState = ["arr"];
 
 const mapStateToProps = state => ({
-  firstName: state.firstName,
-  arr: state.arr
+  firstName: state.user.firstName,
+  lastName: state.user.lastName,
+  paragraph: state.paragraph.items,
 });
 
 export default withRouter(connect(mapStateToProps)(List));

@@ -1,15 +1,13 @@
 import React from "react";
+import {
+  setFirstName,
+  setLastName,
+} from '../../store/actions/user';
 import { connect } from "./../../../lib";
 // import { connect } from "./../Context";
 import InputText from "./../Inputs/InputText";
 
 class DetailButtons extends React.Component {
-  static getDerivedStateFromProps = (nextProps, prevState) => {
-    console.log("nextProps", nextProps);
-  };
-  shouldComponentUpdate() {
-    return true;
-  }
   state = {
     firstName: this.props.firstName,
     lastName: this.props.lastName || ""
@@ -29,7 +27,6 @@ class DetailButtons extends React.Component {
     this.props.setLastName(this.state.lastName);
   };
   render() {
-    console.log("berubah");
     return (
       <React.Fragment>
         <div>{this.props.firstName}</div>
@@ -57,10 +54,13 @@ class DetailButtons extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  firstName: state.firstName,
-  lastName: state.lastName,
-  setFirstName: state.setFirstName,
-  setLastName: state.setLastName
+  firstName: state.user.firstName,
+  lastName: state.user.lastName,
 });
 
-export default connect(mapStateToProps)(DetailButtons);
+const mapDispatchToProps = dispatch => ({
+  setFirstName: value => dispatch(setFirstName(value)),
+  setLastName: value => dispatch(setLastName(value)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(DetailButtons);
