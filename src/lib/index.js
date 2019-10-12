@@ -47,11 +47,9 @@ export const StoreProvider = (props) => {
     };
   }
   const enhancedDispatch = (fun) => {
-    console.log('fun', typeof fun);
     if (typeof fun === 'function') {
       fun(dispatch);
     } else {
-      console.log('fun', fun);
       dispatch(fun);
     } 
   }
