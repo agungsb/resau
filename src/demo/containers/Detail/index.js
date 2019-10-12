@@ -2,6 +2,7 @@ import React from "react";
 import randomColor from "randomcolor";
 import { DetailButtons } from "./../../components";
 
+
 class Detail extends React.PureComponent {
   goBack = () => {
     this.props.history.push("/");

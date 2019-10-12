@@ -7,7 +7,7 @@ export const initialState = {
 export const reducer = (state, action) => {
   switch (action.type) {
     case SET_FIRST_NAME:
-      return { ...state, items: [3,1,4,2,5,6] };
+      return { ...state, items: initialState.items.reverse() };
     case SET_LAST_NAME:
       return { ...state, items: initialState.items };
     default:

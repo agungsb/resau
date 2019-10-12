@@ -9,3 +9,10 @@ export const setLastName = (value) => ({
   type: SET_LAST_NAME,
   value,
 });
+
+export const setBothName = () => {
+  return (dispatch) => {
+    dispatch(setFirstName('Agung'));
+    dispatch(setLastName('Akbar'));
+  }
+}

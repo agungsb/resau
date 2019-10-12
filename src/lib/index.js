@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
 
-const Context = createContext();
+const Context = createContext({});
 
 const { Provider: ContextProvider, Consumer } = Context;
 
@@ -30,10 +30,10 @@ export const StoreProvider = (props) => {
     reducers,
   } = store;
   const combinedReducers = (state, action) => {
-    let resauState = {};
+    let globalAppState = {};
     Object.keys(reducers).map((key) => {
-      resauState = {
-        ...resauState,
+      globalAppState = {
+        ...globalAppState,
         [key]: {
           ...state[key],
           ...reducers[key](state[key], action),
@@ -43,12 +43,21 @@ export const StoreProvider = (props) => {
     });
     return {
       ...state,
-      ...resauState,
+      ...globalAppState,
     };
+  }
+  const enhancedDispatch = (fun) => {
+    console.log('fun', typeof fun);
+    if (typeof fun === 'function') {
+      fun(dispatch);
+    } else {
+      console.log('fun', fun);
+      dispatch(fun);
+    } 
   }
   const [state, dispatch] = React.useReducer(combinedReducers, initialState);
   return (
-    <Provider value={{ state, dispatch }}>
+    <Provider value={{ state, dispatch: enhancedDispatch }}>
       {props.children}
     </Provider>
   );
